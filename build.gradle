@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.github.TCBuildMC:CurtainGradle:92b04249fc"
+        classpath "com.github.TCBuildMC:CurtainGradle:62d13b0d0e"
     }
 }
 
