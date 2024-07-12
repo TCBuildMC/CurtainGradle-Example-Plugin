@@ -3,22 +3,25 @@ buildscript {
         maven {
             url = "https://jitpack.io/"
         }
+        gradlePluginPortal()
         mavenCentral()
     }
 
     dependencies {
-        classpath "com.github.TCBuildMC:CurtainGradle:48c0b3c1e9"
+        classpath "com.github.TCBuildMC:CurtainGradle:1.1-hotfix.1"
     }
 }
 
 plugins {
     id "java-library"
+    id "maven-publish"
 }
 
-apply plugin: "xyz.tcbuildmc.minecraft.curtaingradle"
+group = rootProject.maven_group
+version = rootProject.release_version
+base.archivesName = project.archives_base_name
 
-group = 'xyz.tcbuildmc.minecraft.curtaingradle.example'
-version = '1.0-SNAPSHOT'
+apply plugin: "xyz.tcbuildmc.minecraft.curtaingradle"
 
 repositories {
     curtainGradle.repositories.papermc()
@@ -26,14 +29,58 @@ repositories {
     mavenCentral()
 }
 
+curtainGradle {
+    lang {
+        jdkVersion = 21
+    }
+}
+
 dependencies {
+    annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.32"))
     compileOnly curtainGradle.dependencies.spigotApi("1.20.6-R0.1-SNAPSHOT")
     annotationProcessor(compileOnly(curtainGradle.dependencies.devMetadata("41bb623fa5")))
 
-    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation platform('org.junit:junit-bom:5.10.3')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    testAnnotationProcessor(testCompileOnly("org.projectlombok:lombok:1.18.32"))
 }
 
 test {
     useJUnitPlatform()
+
+    ignoreFailures true
+
+    testLogging {
+        exceptionFormat = "full"
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.withType(Test).configureEach {
+    it.systemProperty "file.encoding", "UTF-8"
+}
+
+java {
+    withSourcesJar()
+}
+
+jar {
+    manifest {
+        attributes "Implementation-Version": project.version
+    }
+}
+
+compileJava.dependsOn clean
+
+publishing {
+    publications {
+        create("MavenVelocity", MavenPublication) {
+            from components.java
+            artifactId = project.archives_base_name
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
 }
