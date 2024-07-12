@@ -38,7 +38,7 @@ curtainGradle {
 dependencies {
     annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.34"))
     compileOnly curtainGradle.dependencies.spigotApi("1.20.6-R0.1-SNAPSHOT")
-    annotationProcessor(compileOnly(curtainGradle.dependencies.devMetadata("41bb623fa5")))
+    annotationProcessor(compileOnly(curtainGradle.dependencies.devMetadata("859d5cda7f")))
 
     testImplementation platform('org.junit:junit-bom:5.10.3')
     testImplementation 'org.junit.jupiter:junit-jupiter'
