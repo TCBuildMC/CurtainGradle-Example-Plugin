@@ -74,7 +74,7 @@ compileJava.dependsOn clean
 
 publishing {
     publications {
-        create("MavenVelocity", MavenPublication) {
+        create("MavenJava", MavenPublication) {
             from components.java
             artifactId = project.archives_base_name
         }
