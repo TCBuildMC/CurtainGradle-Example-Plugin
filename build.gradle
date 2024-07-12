@@ -36,13 +36,13 @@ curtainGradle {
 }
 
 dependencies {
-    annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.32"))
+    annotationProcessor(compileOnly("org.projectlombok:lombok:1.18.34"))
     compileOnly curtainGradle.dependencies.spigotApi("1.20.6-R0.1-SNAPSHOT")
     annotationProcessor(compileOnly(curtainGradle.dependencies.devMetadata("41bb623fa5")))
 
     testImplementation platform('org.junit:junit-bom:5.10.3')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    testAnnotationProcessor(testCompileOnly("org.projectlombok:lombok:1.18.32"))
+    testAnnotationProcessor(testCompileOnly("org.projectlombok:lombok:1.18.34"))
 }
 
 test {
